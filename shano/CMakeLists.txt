@@ -1,0 +1,32 @@
+cmake_minimum_required(VERSION 2.6)
+
+project (shano CXX)
+
+set(SHANO_HEADERS shano.h)
+
+set(PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(SHANO_CODEGEN_DIR "${PROJECT_BINARY_DIR}/codegen")
+
+PREPEND(SHANO_HEADERS_PATHS ${PROJECT_SOURCE_DIR} ${SHANO_HEADERS})
+
+CODEGEN_FILES(SHANO_CODEGEN_SOURCES ${SHANO_CODEGEN_DIR} ${SHANO_HEADERS})
+
+add_custom_command(OUTPUT ${SHANO_CODEGEN_SOURCES}
+    COMMAND ${NGREST_BIN_PATH}ngrestcg -i "${PROJECT_SOURCE_DIR}" -o ${SHANO_CODEGEN_DIR} -t service ${SHANO_HEADERS}
+    DEPENDS ${SHANO_HEADERS_PATHS}
+)
+
+file(GLOB SHANO_SOURCES ${PROJECT_SOURCE_DIR}/*.cpp)
+
+list(APPEND SHANO_SOURCES ${SHANO_CODEGEN_SOURCES})
+
+include_directories(${PROJECT_SOURCE_DIR} $ENV{NGREST_EXT_INCLUDES})
+
+add_library(shano MODULE ${SHANO_SOURCES})
+
+set_target_properties(shano PROPERTIES PREFIX "")
+set_target_properties(shano PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SERVICES_DIR}"
+)
+
+target_link_libraries(shano ngrestutils ngrestcommon ngrestjson ngrestengine $ENV{NGREST_EXT_LIBS})
