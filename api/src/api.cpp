@@ -12,11 +12,20 @@ std::string api::echo(const std::string& text)
 
 std::string api::addSequence(const std::string& sequence)
 {
-    spdlog::info("Enter in addSequence, {}!", sequence);
+    spdlog::info("Enter in old huffman ");
     Huffman huffman = Huffman(sequence);
     std::string compresed = huffman.Encode();
-    spdlog::info("Encoded sequence is {}!", compresed);
 
     return compresed;
 }
 
+
+std::string api::newsequence(const std::string& sequence)
+{
+    spdlog::info("Enter in new huffman ");
+
+    Huffman huffman = Huffman(sequence);
+    std::string compresed = huffman.EncodeFixedTable();
+
+    return compresed;
+}

@@ -88,3 +88,12 @@ if (MINGW) # cmake sets .so extension for modules under windows
     set_target_properties(api PROPERTIES SUFFIX ".dll")
     link_directories("${NGREST_HOME}/bin")
 endif()
+
+add_subdirectory(shano)
+if (APPLE) # cmake sets .so extension for modules under mac os x
+    set_target_properties(shano PROPERTIES SUFFIX ".dylib")
+endif()
+if (MINGW) # cmake sets .so extension for modules under windows
+    set_target_properties(shano PROPERTIES SUFFIX ".dll")
+    link_directories("${NGREST_HOME}/bin")
+endif()

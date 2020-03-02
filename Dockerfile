@@ -22,11 +22,13 @@ EXPOSE 80
 EXPOSE 9098
 
 RUN a2enmod headers
+RUN a2enmod rewrite
 
 COPY . /usr/src/projects
 RUN ngrest clean
 RUN ngrest build
 RUN cp .ngrest/local/build/services/api.so /root/.ngrest/ngrest-build/deploy/share/ngrest/services
+RUN cp .ngrest/local/build/services/shano.so /root/.ngrest/ngrest-build/deploy/share/ngrest/services
 
 COPY api.conf /etc/apache2/sites-available/000-default.conf
 

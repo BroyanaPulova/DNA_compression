@@ -48,6 +48,7 @@ public:
 	// Inherited via CodingAlgorithm
 	virtual string Encode() override;
 	virtual string Decode(string code) override;
+	virtual string EncodeFixedTable();
 
 	string EncodeDNA();
 	string DecodeDNA();

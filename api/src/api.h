@@ -29,9 +29,14 @@ public:
     std::string echo(const std::string& text);
 
     //! adds a new sequence for compression
-    // *method: POST
+    // *method: PUT
     // *location: /
     std::string addSequence(const std::string& sequence);
+
+     //! adds a new sequence for compression with new huffman algorithm
+    // *method: POST
+    // *location: /
+    std::string newsequence(const std::string& sequence);
 };
 
 

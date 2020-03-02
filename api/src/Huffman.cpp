@@ -26,6 +26,24 @@ string Huffman::Encode()
 	return stream.str();
 }
 
+string Huffman::EncodeFixedTable(){
+
+	stringstream stream;
+	
+	unordered_map<char, string> * newCodeEntity = new unordered_map<char, string>();
+	newCodeEntity->operator[]('A') = "00";
+	newCodeEntity->operator[]('C') = "01";
+	newCodeEntity->operator[]('G') = "10";
+	newCodeEntity->operator[]('T') = "11";
+
+	for (int i = 0; (unsigned)i < text.size(); i++)
+	{
+		stream << newCodeEntity->operator[](text[i]);
+	}
+
+	return stream.str();
+}
+
 string Huffman::Decode(string code)
 {
 	Node* currenNode = tree;
